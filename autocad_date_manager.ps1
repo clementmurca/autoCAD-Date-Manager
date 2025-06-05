@@ -26,8 +26,11 @@ if ($config.date_format -eq "yyyy-DDD") {
     $customDateFormat = "$year-$dayOfYear-"
 }
 
-# Set the single environment variable
-[Environment]::SetEnvironmentVariable("AUTOCAD_CURRENT_DATE", $customDateFormat, "Process")
+# Set environment variable at USER level for persistence
+[Environment]::SetEnvironmentVariable("AUTOCAD_CURRENT_DATE", $customDateFormat, "User")
+
+# Also set it for current session (immediate availability)
+$env:AUTOCAD_CURRENT_DATE = $customDateFormat
 
 # Confirmation display
 Write-Host "Environment variable defined:" -ForegroundColor Green
